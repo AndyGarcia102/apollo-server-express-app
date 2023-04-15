@@ -55,11 +55,11 @@ async function startServer(){
         ),
     );
 
-    // app.use(express.static(path.join(__dirname, "Web/client", "build")));
+    app.use(express.static(path.join(__dirname, "Web/client", "build")));
 
-    // app.use((req, res, next) => {
-    //     res.sendFile(path.join(__dirname, "Web/client", "build", "index.html"));
-    // });
+    app.use((req, res, next) => {
+        res.sendFile(path.join(__dirname, "Web/client", "build", "index.html"));
+    });
     
 
     await mongoose.connect(process.env.MONGODB_URI);
