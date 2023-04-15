@@ -8,17 +8,12 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const typeDefs = require("./typeDefs");
 const resolvers = require("./resolver");
-const cookie = require("cookie");
-const Auth = require('./models/Auth.model');
-const Users = require('./models/Users.model');
-const Mongoose = require('mongoose');
-const path = require('path');
-const jwt = require("jsonwebtoken");
+const path = require("path");
+require('dotenv').config();
 
 require('dotenv').config();
 
-
-async function startServer(){
+async function startServer() {
 
     const app = express();
 
@@ -28,31 +23,22 @@ async function startServer(){
         typeDefs,
         resolvers,
         introspection: true,
-        plugins:[ApolloServerPluginDrainHttpServer({httpServer})]
+        plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
     });
-
 
     await server.start();
 
     app.set('view engine', 'ejs');
-    
 
+    // cors({
+    //     origin: ['https://dolphin-app-djupw.ondigitalocean.app', 'http://localhost:3000', 'http://localhost:8080/graphql', 'http://localhost:19006', 'https://studio.apollogrpahql.com'],
+    //     credentials: true,
+    // }),
     app.use(
         '/graphql',
-        cors({
-            origin: ['http://localhost:3000','http://localhost:8080/graphql', 'http://localhost:19006' ,'https://studio.apollogrpahql.com'],
-            credentials: true,
-        }),
+        cors(),
         bodyParser.json(),
-        expressMiddleware(server, {
-            context: async ({req}) => {
-                const token = req.headers.authorization || " ";
-
-                return token;
-            },
-            listen:{port:8080},
-        }
-        ),
+        expressMiddleware(server),
     );
 
     app.use(express.static(path.join(__dirname, "Web/client", "build")));
@@ -60,15 +46,13 @@ async function startServer(){
     app.use((req, res, next) => {
         res.sendFile(path.join(__dirname, "Web/client", "build", "index.html"));
     });
-    
+
 
     await mongoose.connect(process.env.MONGODB_URI);
     console.log("Mongoose Connected...");
-    await new Promise((resolve) => httpServer.listen({port:8080}, resolve));
+    await new Promise((resolve) => httpServer.listen({ port: 8080 }, resolve));
 
     console.log(`🚀 Server ready at` + 8080);
-
- }
+}
 
 startServer();
-
