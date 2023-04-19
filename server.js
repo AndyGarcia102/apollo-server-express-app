@@ -11,7 +11,6 @@ const resolvers = require("./resolver");
 const path = require("path");
 require('dotenv').config();
 
-require('dotenv').config();
 
 async function startServer() {
 
