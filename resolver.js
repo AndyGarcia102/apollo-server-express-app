@@ -1706,7 +1706,7 @@ const resolvers = {
             const ID = Mongoose.Types.ObjectId(PID);
 
             const date = new Date(time);
-            date.setUTCHours(date.getUTCHours() - 4);
+            date.setUTCHours(date.getUTCHours());
             const utcDate = new Date(date.toISOString());
 
             console.log(utcDate);
