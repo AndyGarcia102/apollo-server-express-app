@@ -1709,6 +1709,8 @@ const resolvers = {
             date.setUTCHours(date.getUTCHours() - 4);
             const utcDate = new Date(date.toISOString());
 
+            console.log(utcDate);
+
             try {
                 await Professors.updateOne({ _id: ID }, { $pull: { availSchedule: utcDate } })
             } catch (error) {
