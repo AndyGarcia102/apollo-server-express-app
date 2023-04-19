@@ -38,6 +38,7 @@ export const GetProfessorSchedule = ({ onUpdate }) => {
     if (error) return `Error! ${error.message}`;
 
     function updateDates(time) {
+        console.log(time);
         updateProfessorAvailSchedule({
             variables: { pid: user.id, time: time },
             refetchQueries: [{ query: GET_PROFESSOR, variables: { id: user.id } }]
