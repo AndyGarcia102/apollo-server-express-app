@@ -1660,7 +1660,7 @@ const resolvers = {
                     subject: "mySDSchedule - Reset password",
                     html: `<h1>Reset Password </h1>
                         <p>Please click this Link to reset your Password</p>
-                        <a href=http://localhost:3000/recovery> Click here</a>
+                        <a href=https://dolphin-app-djupw.ondigitalocean.app/recovery> Click here</a>
                     `,
                 })
 
@@ -1708,8 +1708,6 @@ const resolvers = {
             const date = new Date(time);
             date.setUTCHours(date.getUTCHours());
             const utcDate = new Date(date.toISOString());
-
-            console.log(utcDate);
 
             try {
                 await Professors.updateOne({ _id: ID }, { $pull: { availSchedule: utcDate } })
