@@ -67,7 +67,7 @@ const getRefreshToken = async (refreshTokenId, privilege) => {
     "variables": { refreshTokenId, privilege }
   }
 
-  const refreshToken = await fetch("http://localhost:8080/graphql", {
+  const refreshToken = await fetch("https://dolphin-app-djupw.ondigitalocean.app/graphql", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(graphqlQuery),
